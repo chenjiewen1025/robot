@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Message">
+    
+    <resultMap id="MessageResult" type="com.robot.bean.Message">
+        <id property="id" column="ID" jdbcType="INTEGER" />
+        <result property="command" column="COMMAND" jdbcType="VARCHAR"/>
+        <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
+        <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="selectAll" resultMap="MessageResult" >
+       select ID,COMMAND,DESCRIPTION,CONTENT from message where 1=1
+    </select>
+    <select id="selectBycommand" resultMap="MessageResult" >
+        select ID,COMMAND,DESCRIPTION,CONTENT from message where 1=1 and command=#{0}
+    </select>
+    <select id="selectLikedescription" resultMap="MessageResult">
+        select ID,COMMAND,DESCRIPTION,CONTENT from message where 1=1 and description like CONCAT(CONCAT('%', #{0}), '%')
+    </select>
+    <delete id="deleteOne">
+        delete from message where id=#{0}
+    </delete>
+    <insert id="addOne" parameterType="com.robot.bean.Message">
+        insert into message(COMMAND,DESCRIPTION,CONTENT) values(#{command},#{description},#{content})
+    </insert>
+    <update id="updateById" parameterType="com.robot.bean.Message">
+        UPDATE message SET command = #{command},description = #{description},content=#{content}
+        WHERE id = #{id}
+    </update>
+    <select id="selectById" resultType="com.robot.bean.Message">
+        select ID,COMMAND,DESCRIPTION,CONTENT from message where ID=#{0}
+    </select>
+
+</mapper>
