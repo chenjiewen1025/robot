@@ -112,6 +112,15 @@ public class MessageDao {
         }
         return message;
     }
+    public void deleteSome(List<Integer> ids){
+        try {
+            sqlSession = dbAccess.getSqlSession();
+            sqlSession.delete("Message.deleteSome",ids);
+            sqlSession.commit();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 //    public static void main(String[] args) throws SQLException, ClassNotFoundException {
 //        MessageDao messageDao = new MessageDao();
 //        messageDao.queryMessageList();

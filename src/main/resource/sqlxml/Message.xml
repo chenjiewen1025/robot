@@ -12,8 +12,6 @@
         <result property="description" column="DESCRIPTION" jdbcType="VARCHAR"/>
         <result property="content" column="CONTENT" jdbcType="VARCHAR"/>
     </resultMap>
-
-
     <select id="selectAll" resultMap="MessageResult" >
        select ID,COMMAND,DESCRIPTION,CONTENT from message where 1=1
     </select>
@@ -25,6 +23,13 @@
     </select>
     <delete id="deleteOne">
         delete from message where id=#{0}
+    </delete>
+    <delete id="deleteSome" parameterType="java.util.List" >
+        delete from message where id in(
+        <foreach collection="list" item="item" index="i" separator=",">
+            #{item}
+        </foreach>
+        )
     </delete>
     <insert id="addOne" parameterType="com.robot.bean.Message">
         insert into message(COMMAND,DESCRIPTION,CONTENT) values(#{command},#{description},#{content})

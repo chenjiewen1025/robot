@@ -4,6 +4,7 @@ import com.robot.bean.Message;
 import com.robot.dao.MessageDao;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CtrlService {
@@ -43,7 +44,13 @@ public class CtrlService {
     public Message selectById(String id) {
         return messageDao.selectById(Integer.valueOf(id));
     }
-
+    public void deleteSome(String[] ids){
+        List<Integer> idList = new ArrayList<>();
+        for (String id:ids){
+            idList.add(Integer.valueOf(id));
+        }
+        messageDao.deleteSome(idList);
+    }
 }
 
 
